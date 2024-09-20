@@ -1,6 +1,7 @@
 import React from "react";
 
 import ReactDOM from "react-dom/client";
+import RootApp from "./RootApp";
 // import Checkbox from "./components/Common/Checkbox";
 // import Button from "./components/Common/Button";
 // // import { Input } from "reactstrap";
@@ -10,7 +11,6 @@ import ReactDOM from "react-dom/client";
 // import RangeSlider from "./components/Common/RangeSlider";
 // import ResetPasswordForm from "./components/Common/ResetPasswordForm";
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-import RootApp from "./RootApp";
 root.render(
     <React.StrictMode>
         <RootApp />

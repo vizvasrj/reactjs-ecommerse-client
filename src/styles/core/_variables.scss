@@ -32,7 +32,7 @@ $danger-bg: #dc3545;
 $danger-hover-bg: #c3081a;
 
 $dark-bg: $theme-black;
-$dark-hover-bg: $black;
+$dark-hover-bg: $theme-black;
 
 $default-color: #758696;
 $default-bg: #758696;
@@ -120,12 +120,12 @@ $layout-transition-speed: 0.3s !default;
 $layout-transition-higher-speed: 0.6s !default;
 
 // icons
-$twitter: url('/images/social-icons/twitter.svg');
-$pinterest: url('/images/social-icons/pinterest.svg');
-$instagram: url('/images/social-icons/instagram.svg');
-$facebook: url('/images/social-icons/facebook.svg');
+$twitter: url('https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg');
+$pinterest: url('https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg');
+$instagram: url('https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg');
+$facebook: url('https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg');
 
-$bars: url('/images/bars.png');
-$chevron-down: url('/images/chevron-down.svg');
-$close: url('/images/close.svg');
+$bars: url('https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg');
+$chevron-down: url('https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg');
+$close: url('https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg');
 $bag: url('/images/bag.svg');

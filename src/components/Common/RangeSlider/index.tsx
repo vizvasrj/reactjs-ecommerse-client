@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Slider, { SliderTooltip } from 'rc-slider';
 // const Slider = require('rc-slider');
-// import Slider from 'rc-slider';
+// import Slider from 'rc-npm slider';
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 import 'rc-slider/assets/index.css';

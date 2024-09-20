@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../reducer";
 
+import { signOut } from "../Login/actions";
+import { ThunkDispatch } from "redux-thunk";
+import { SignupActionTypes } from "../Signup/action";
 const Header: React.FC = () => {
     const authenticated = useSelector((state: RootState) => state.authentication.authenticated);
     const linkStyle = {
@@ -12,6 +15,7 @@ const Header: React.FC = () => {
         padding: "5px",
         border: "1px solid blue",
     };
+    const dispatch = useDispatch<ThunkDispatch<RootState, null, SignupActionTypes>>();
 
     return (
         <div>

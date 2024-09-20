@@ -5,10 +5,11 @@
 @import 'core/utils/reset';
 
 // Import Bootstrap source files
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
 // Import core styles
 @import 'core/core';
 
 // Import custom styles
 @import 'custom';
+

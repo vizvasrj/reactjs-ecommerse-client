@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": "avoid",
+  "prettier.jsxSingleQuote": true,
+  "prettier.trailingComma": "none",
+  "jumpToAliasFile.alias": {
+    "app": "app"
+  },
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false
+}
+

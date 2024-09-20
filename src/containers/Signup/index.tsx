@@ -16,7 +16,7 @@ import { GetState } from "@reduxjs/toolkit";
 import { signupChange, signUp, subscribeChange } from "./action";
 import { useForm } from "react-hook-form";
 import { SignupActionTypes } from "./action";
-
+import { selectSignupAndAuthentication } from "../../selectors/authselector";
 
 type IFormInput = {
     email: string;
@@ -27,13 +27,20 @@ type IFormInput = {
 
 const Signup: React.FC = () => {
     const navigate = useNavigate();
-    const state = useSelector((state: RootState) => state);
+    // const state = useSelector((state: RootState) => state);
+    // const { signup, authentication } = useSelector((state: RootState) => ({
+    //     signup: state.signup,
+    //     authentication: state.authentication
+    // }));
+    const { signup, authentication } = useSelector(selectSignupAndAuthentication);
     const dispatch = useDispatch<ThunkDispatch<RootState, null, SignupActionTypes>>();
-    const { isLoading, isSubmitting, isSubscribed, signupFormData } = state.signup;
+    const { isLoading, isSubmitting, isSubscribed, signupFormData } = signup;
 
-    if (state.authentication.authenticated) {
-        navigate("/dashboard");
-    }
+    React.useEffect(() => {
+        if (authentication.authenticated) {
+            navigate("/dashboard");
+        }
+    }, [authentication.authenticated, navigate]);
 
     const handleSubmitFn = (data: IFormInput) => {
         // e.preventDefault();
@@ -84,7 +91,7 @@ const Signup: React.FC = () => {
                         <Col xs='12' md='12'>
                             <Input
                                 fieldType='input'
-                                type='email'
+                                type='text'
                                 errorMessage={(errors.email && "This field is required") || ""}
                                 label='Email'
                                 name='email'

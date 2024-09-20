@@ -9,8 +9,8 @@ import { allFieldsValidation } from "../../utils/validation";
 import { SIGNUP_CHANGE, SUBSCRIBE_CHANGE, SET_SIGNUP_FORM_ERRORS, SET_SIGNUP_SUBMITTING, SET_SIGNUP_LOADING, SIGNUP_RESET } from "./constants";
 import axios from "axios";
 import { SET_AUTH } from "../Authentication/constants";
-import { SetAuthAction  } from "../Authentication/action";
-import { success } from 'react-notification-system-redux';
+import { SetAuthAction } from "../Authentication/action";
+import { toast } from 'react-toastify';
 import { Notification } from 'react-notification-system';
 import handleError from "../../utils/error";
 interface FormData {
@@ -93,6 +93,7 @@ export const signUp = () => {
                 };
 
                 console.log("SENDING REQUEST TO REGISTER USER", user);
+                console.log("API URL", API_URL);
                 const response = await axios.post(`${API_URL}/auth/register`, user);
 
                 const successfulOptions: Notification = {
@@ -104,7 +105,15 @@ export const signUp = () => {
                 localStorage.setItem('token', response.data.token);
                 setToken(response.data.token);
                 dispatch({ type: SET_AUTH });
-                dispatch(success(successfulOptions));
+                toast.success(successfulOptions.title, {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 dispatch({ type: SIGNUP_RESET });
 
             }

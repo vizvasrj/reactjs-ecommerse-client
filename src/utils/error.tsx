@@ -1,6 +1,7 @@
 import { error } from 'react-notification-system-redux';
 import { Notification } from 'react-notification-system';
 import { AxiosError } from 'axios';
+import { toast, ToastPosition } from 'react-toastify';
 const handleError = (err: any, dispatch: any, title = '') => {
     let unsuccessfulOptions: Notification = {
         title: title,
@@ -17,6 +18,16 @@ const handleError = (err: any, dispatch: any, title = '') => {
             unsuccessfulOptions.message = "Your request was unsuccessful. Please try again.";
         }
     }
-    dispatch(error(unsuccessfulOptions));
+    // dispatch(error(unsuccessfulOptions));
+    toast.error(unsuccessfulOptions.message, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        
+    });
 }
 export default handleError;
