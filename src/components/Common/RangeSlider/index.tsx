@@ -12,7 +12,10 @@ const { Handle } = Slider;
 
 interface RangeSliderProps {
     type?: 'slider' | 'range';
-    marks?: Record<number, string>;
+    marks?: Record<number, React.ReactNode | {
+        style?: React.CSSProperties;
+        label?: string;
+    }>
     step?: number;
     defaultValue: number | number[];
     max?: number;
@@ -70,7 +73,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
         }
     }
 
-    console.log(defaultValue, "defaultValue", sliderValue, "sliderValue", rangeValue, "rangeValue", "MIN", min);
+    // console.log(defaultValue, "defaultValue", sliderValue, "sliderValue", rangeValue, "rangeValue", "MIN", min);
     return (
         <>
             {type === 'slider' ? (

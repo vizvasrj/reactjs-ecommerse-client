@@ -15,24 +15,36 @@ import '../src/styles/style.scss';
 
 // rc-slider style
 import 'rc-slider/assets/index.css';
-
+import setToken from "./utils/token";
+import { SET_AUTH } from "./containers/Authentication/constants";
 console.log(process.env.API_URL, "from rootapp.tsx");
+
 
 const store = configureStore({
     reducer: rootReducer,
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: (getDefaultMiddleware) => 
+    middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(thunk),
 })
+
+const token = localStorage.getItem('token');
+
+if (token) {
+    // authenticate api authorization
+    setToken(token);
+
+    // authenticate routes
+    store.dispatch({ type: SET_AUTH });
+}
 
 const RootApp: React.FC = () => {
     return (
         <Provider store={store}>
             {/* <BrowserRouter>
                 <Routes> */}
-                    {/* Add routes here */}
-                    <Application />
-                {/* </Routes>
+            {/* Add routes here */}
+            <Application />
+            {/* </Routes>
             </BrowserRouter> */}
         </Provider>
     )

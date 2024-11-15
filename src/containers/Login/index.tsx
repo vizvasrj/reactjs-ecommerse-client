@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "reactstrap";
-import { redirect, useNavigate } from "react-router";
+// import { redirect, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../reducer";
@@ -14,32 +14,35 @@ import { login, loginChange } from "./actions";
 import { useForm } from "react-hook-form";
 import { LoginActionTypes } from "./actions";
 import { selectSignupAndAuthentication } from "../../selectors/authselector";
-
+import { navigate, NavigateActionType } from "../Navigate";
 type IFormInput = {
     email: string;
     password: string;
 };
 
 const Login: React.FC = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // const { login, authentication } = useSelector((state: RootState) => ({
     //     login: state.login,
     //     authentication: state.authentication
     // }));
     const registerLink = () => {
-        navigate("/register")
+        dispatch(navigate("/register"))
     }
-    const { login: loginState, authentication } = useSelector(selectSignupAndAuthentication);
+    // const { login: loginState, authentication } = useSelector(selectSignupAndAuthentication);
 
-    const dispatch = useDispatch<ThunkDispatch<RootState, null, LoginActionTypes>>();
-    const { isLoading, isSubmitting, loginFormData } = loginState;
-
+    const dispatch = useDispatch<ThunkDispatch<RootState, null, LoginActionTypes | NavigateActionType>>();
+    // const { isLoading, isSubmitting, loginFormData } = loginState;
+    const isLoading = useSelector((state: RootState) => state.login.isLoading);
+    const isSubmitting = useSelector((state: RootState) => state.login.isSubmitting);
+    const loginFormData = useSelector((state: RootState) => state.login.loginFormData);
+    const authentication = useSelector((state: RootState) => state.authentication);
     // if (authentication.authenticated) {
     //     navigate("/dashboard");
     // }
     useEffect(() => {
         if (authentication.authenticated) {
-            navigate("/dashboard");
+            dispatch(navigate("/dashboard"));
         }
     }, [authentication.authenticated]);
 

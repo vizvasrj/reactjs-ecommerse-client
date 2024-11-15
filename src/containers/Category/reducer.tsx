@@ -1,0 +1,133 @@
+import {
+    FETCH_CATEGORIES,
+    FETCH_STORE_CATEGORIES,
+    FETCH_CATEGORY,
+    CATEGORY_CHANGE,
+    CATEGORY_EDIT_CHANGE,
+    SET_CATEGORY_FORM_ERRORS,
+    SET_CATEGORY_FORM_EDIT_ERRORS,
+    ADD_CATEGORY,
+    REMOVE_CATEGORY,
+    SET_CATEGORIES_LOADING,
+    RESET_CATEGORY
+} from './constants';
+
+// interface Category {
+//     _id: string;
+// }
+import { Category, CategoryFormData } from './interface';
+
+// interface CategoryFormData {
+//     name: string;
+//     description: string;
+//     products: any[];
+//     isActive: boolean;
+// }
+
+interface State {
+    categories: Category[];
+    storeCategories: Category[];
+    category: Category;
+    categoryFormData: CategoryFormData;
+    formErrors: any;
+    editFormErrors: any;
+    isLoading: boolean;
+}
+
+const initialState: State = {
+    categories: [],
+    storeCategories: [],
+    category: {
+        _id: ''
+    } as Category,
+    categoryFormData: {
+        name: '',
+        description: '',
+        products: [],
+        isActive: true
+    },
+    formErrors: {},
+    editFormErrors: {},
+    isLoading: false
+};
+
+const categoryReducer = (state: State = initialState, action: any) => {
+    switch (action.type) {
+        case FETCH_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload
+            };
+        case FETCH_STORE_CATEGORIES:
+            return {
+                ...state,
+                storeCategories: action.payload
+            };
+        case FETCH_CATEGORY:
+            return {
+                ...state,
+                category: action.payload
+            };
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                categories: [...state.categories, action.payload]
+            };
+        case REMOVE_CATEGORY:
+            const index = state.categories.findIndex((b: any) => b._id === action.payload);
+            return {
+                ...state,
+                categories: [
+                    ...state.categories.slice(0, index),
+                    ...state.categories.slice(index + 1)
+                ]
+            };
+        case CATEGORY_CHANGE:
+            return {
+                ...state,
+                categoryFormData: { ...state.categoryFormData, ...action.payload }
+            };
+        case CATEGORY_EDIT_CHANGE:
+            return {
+                ...state,
+                category: {
+                    ...state.category,
+                    ...action.payload
+                }
+            };
+        case SET_CATEGORY_FORM_ERRORS:
+            return {
+                ...state,
+                formErrors: action.payload
+            };
+        case SET_CATEGORY_FORM_EDIT_ERRORS:
+            return {
+                ...state,
+                editFormErrors: action.payload
+            };
+        case SET_CATEGORIES_LOADING:
+            return {
+                ...state,
+                isLoading: action.payload
+            };
+        case RESET_CATEGORY:
+            return {
+                ...state,
+                categoryFormData: {
+                    name: '',
+                    description: '',
+                    products: [],
+                    isActive: true
+                },
+                category: {
+                    _id: ''
+                },
+                formErrors: {},
+                editFormErrors: {}
+            };
+        default:
+            return state;
+    }
+};
+
+export default categoryReducer;

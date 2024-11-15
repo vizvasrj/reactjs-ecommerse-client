@@ -3,19 +3,23 @@ import { Row, Col } from 'reactstrap';
 import Input from '../NewInput';
 import Button from '../Button';
 import { useForm } from 'react-hook-form';
-
+import { ResetPasswordFormData } from '../../../containers/ResetPassword/interface';
 interface ResetPasswordFormProps {
     isToken: boolean;
-    password: string;
-    confirmPassword: string;
+    // password: string;
+    // confirmPassword: string;
     resetPassword: (data: { password: string; confirmPassword: string }) => void;
+    resetFormData: ResetPasswordFormData;
+    resetPasswordChange: (name: string, value: string) => void;
 }
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
     isToken,
-    resetPassword
+    resetFormData,
+    resetPassword,
+    resetPasswordChange,
 }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<ResetPasswordFormProps>();
+    const { register, handleSubmit, formState: { errors } } = useForm<{ password: string; confirmPassword: string }>();
 
     return (
         <div className='reset-password-form'>
@@ -28,10 +32,17 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
                             errorMessage={(errors.password && 'Password is required') || ""}
                             label={'Password'}
                             name={'password'}
-                            placeholder={'Password'}
+                            placeholder={isToken ? 'New Password' : 'Current Password'}
                             required={true}
-                            onInputChange={() => { }}
+                            onInputChange={
+                                (name, value) => {
+                                    if (typeof value === "string") {
+                                        resetPasswordChange(name, value);
+                                    }
+                                }
+                            }
                             register={register}
+                            value={resetFormData.password}
                         />
                     </Col>
                     <Col xs='12' lg='6'>
@@ -43,8 +54,15 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
                             name={'confirmPassword'}
                             placeholder={'Confirm Password'}
                             required={true}
-                            onInputChange={() => { }}
+                            onInputChange={
+                                (name, value) => {
+                                    if (typeof value === "string") {
+                                        resetPasswordChange(name, value);
+                                    }
+                                }
+                            }
                             register={register}
+                            value={resetFormData.confirmPassword}
                         />
                     </Col>
                 </Row>

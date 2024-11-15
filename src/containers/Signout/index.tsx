@@ -11,10 +11,8 @@ const Signout: React.FC = () => {
     const dispatch = useDispatch<ThunkDispatch<RootState, null, ClearAuthAction>>();
     const navigate = useNavigate();
     React.useEffect(() => {
-        dispatch(signOut(()=>{
-            // console.log("sign out")
-            navigate("/login")
-        }))
+        dispatch(signOut())
+        navigate('/')
     }, [])
 
     return (

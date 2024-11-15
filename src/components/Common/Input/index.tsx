@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
-import ReactStars from '../../Package/react-stars';
-
+// import ReactStars from '../../Package/react-stars';
+import ReactStars from 'react-stars';
 
 import { InputProps } from './model';
 
@@ -82,11 +82,11 @@ const Input: React.FC<InputProps> = ({
             <div className={styles}>
                 {label && <label>{label}</label>}
                 <ReactStars
-                    classNames={name}
+                    className={name}
                     count={5}
                     size={30}
-                    color={'#adb5bd'}
-                    activeColor={'#ffb302'}
+                    color1={'#adb5bd'}
+                    color2={'#ffb302'}
                     a11y={true}
                     isHalf={false}
                     emptyIcon={<i className='fa fa-star' />}

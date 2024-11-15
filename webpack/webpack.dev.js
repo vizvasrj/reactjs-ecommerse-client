@@ -29,7 +29,7 @@ const config = {
                         options: {
                             postcssOptions: {
                                 plugins: () => [require('autoprefixer')]
-                            
+
                             }
                         }
                     },
@@ -84,10 +84,10 @@ const config = {
         hot: true,
         // disableHostCheck: true,
         historyApiFallback: true,
-        allowedHosts: 'all'
+        allowedHosts: 'all',
     },
     devtool: 'eval-source-map',
-    
+
 };
 
 

@@ -22,7 +22,7 @@ interface InputProps {
 
 }
 
-const Input: React.FC<InputProps> = ({ label, type, name, register, required, errorMessage, fieldType, onInputChange, rows, placeholder, value, min, max, step, disabled, decimals, autoComplete }) => {
+const NewInput: React.FC<InputProps> = ({ label, type, name, register, required, errorMessage, fieldType, onInputChange, rows, placeholder, value, min, max, step, disabled, decimals, autoComplete }) => {
     const _onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (onInputChange) {
             if (e.target instanceof HTMLInputElement && e.target.type === 'file' && e.target.files) {
@@ -59,4 +59,4 @@ const Input: React.FC<InputProps> = ({ label, type, name, register, required, er
     );
 };
 
-export default Input;
+export default NewInput;

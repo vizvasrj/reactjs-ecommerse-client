@@ -1,10 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { CheckboxProps, CheckboxState } from './model';
 import { useForm } from "react-hook-form";
 
-const Checkbox: React.FC<CheckboxProps> = (props) => {
-    const { className, id, name, label, disabled, checked, onChange } = props;
+export interface CheckboxProps {
+    id?: string;
+    name?: string;
+    label?: string | JSX.Element;
+    disabled?: boolean;
+    checked?: boolean;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>, name: string, value: boolean) => void;
+    className?: string;
+}
 
+export interface CheckboxState {
+    isChecked: boolean;
+}
+
+const Checkbox: React.FC<CheckboxProps> = ({
+    id,
+    className = '',
+    name = '',
+    label = '',
+    disabled = false,
+    checked = false,
+    onChange,
+
+}) => {
     const { register } = useForm<CheckboxState>();
 
     const [isChecked, setIsChecked] = useState<boolean>(checked || false);
@@ -21,19 +41,19 @@ const Checkbox: React.FC<CheckboxProps> = (props) => {
 
     const isLabelText = label && typeof label === 'string';
     const extraClassName = isLabelText
-    ? `default-icon ${className}`
-    : `custom-icon ${className}`;
+        ? `default-icon ${className}`
+        : `custom-icon ${className}`;
 
     return (
         <div className={`checkbox ${extraClassName}`}>
-            <input 
+            <input
                 {...register("isChecked")}
-                type="checkbox" 
-                id={id} 
-                name={name} 
+                type="checkbox"
+                id={id}
+                name={name}
                 checked={!disabled && isChecked}
-                onChange={_onChange} 
-                disabled={disabled} 
+                onChange={_onChange}
+                disabled={disabled}
                 className={'input-checkbox'}
             />
             <label htmlFor={id}>{isLabelText ? label : null}</label>

@@ -1,9 +1,8 @@
-import Validator from 'validatorjs';
+import Validator, { ValidationErrors } from 'validatorjs';
 import DOMPurify from 'dompurify';
-
 interface ValidationResponse {
     isValid: boolean;
-    errors?: object;
+    errors?: ValidationErrors;
 }
 
 export const allFieldsValidation = (data: object, rules: Validator.Rules, options?: Validator.ErrorMessages): ValidationResponse => {

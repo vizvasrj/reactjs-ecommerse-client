@@ -15,7 +15,10 @@ import { ThunkDispatch } from "redux-thunk";
 import { RootState } from "../../reducer";
 import { SetAuthAction, ClearAuthAction } from "../Authentication/action";
 import { CLEAR_AUTH, SET_AUTH } from "../Authentication/constants";
-import { redirect, useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import toastConfig from "../../utils/toastConfig";
+// import { redirect } from "react-router";
+// import { navigate, NavigateActionType } from "../Navigate";
 interface FormData {
     [key: string]: string;
 }
@@ -72,6 +75,8 @@ export const login = () => {
             'min.password': 'Password must be at least 6 characters.'
         });
 
+        console.log("user data", user);
+
         if (!isValid) {
             return dispatch({ type: SET_LOGIN_FORM_ERRORS, payload: errors });
         }
@@ -94,8 +99,9 @@ export const login = () => {
 
             setToken(response.data.token);
 
-            dispatch({type: SET_AUTH});
+            dispatch({ type: SET_AUTH });
             // dispatch(success(successfulOptions));
+            toast.success(successfulOptions.title, toastConfig);
 
             dispatch({ type: LOGIN_RESET });
         } catch (error) {
@@ -108,7 +114,7 @@ export const login = () => {
     };
 };
 
-export const signOut = (callback: () => void) => {
+export const signOut = () => {
     return (dispatch: ThunkDispatch<RootState, null, ClearAuthAction>, getState: () => RootState) => {
         try {
             // const successfulOptions = {
@@ -116,7 +122,7 @@ export const signOut = (callback: () => void) => {
             //     position: 'tr',
             //     autoDismiss: 1
             // };
-    
+
             // dispatch(clearAuth());
             // console.log("signout here")
             dispatch({ type: CLEAR_AUTH });
@@ -124,10 +130,10 @@ export const signOut = (callback: () => void) => {
             // dispatch(push('/login'));
             // const navigate = useNavigate()
             // navigate("/login")
-    
+
             localStorage.removeItem('token');
-            callback()
-    
+            // callback()
+
             // dispatch(success(successfulOptions));
             // dispatch(clearCart());
 

@@ -6,7 +6,7 @@ import RootApp from "./RootApp";
 // import Button from "./components/Common/Button";
 // // import { Input } from "reactstrap";
 // // import Input from "./components/Common/Input";
-// import ReactStars from "./components/Package/react-stars";
+import ReactStars from "./components/Package/react-stars";
 // import Radio from "./components/Common/Radio";
 // import RangeSlider from "./components/Common/RangeSlider";
 // import ResetPasswordForm from "./components/Common/ResetPasswordForm";

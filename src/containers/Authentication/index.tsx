@@ -6,9 +6,11 @@ import { RootState } from '../../reducer';
 
 export default function requireAuth(ComposedComponent: React.ComponentType<React.FC>) {
     return (props: any) => {
+        // console.log("logs")
         const navigate = useNavigate();
         const authenticated = useSelector((state: RootState) =>
             state.authentication.authenticated);
+        // console.log(authenticated, "authenticated", "BOOLEAN");
 
         // const shouldNavigateAway = () => {
         //     if (!authenticated) {
@@ -24,8 +26,11 @@ export default function requireAuth(ComposedComponent: React.ComponentType<React
 
 
         useEffect(() => {
+            // console.log("authenticated", authenticated, "@@", "i am redirecting, if not authenticated");
             if (!authenticated) {
-                navigate("/");
+                navigate("/login");
+                // console.log("Navigate away");
+
             }
         }, [authenticated]);
 

@@ -17,6 +17,7 @@ import { signupChange, signUp, subscribeChange } from "./action";
 import { useForm } from "react-hook-form";
 import { SignupActionTypes } from "./action";
 import { selectSignupAndAuthentication } from "../../selectors/authselector";
+import { navigate, NavigateActionType } from "../Navigate";
 
 type IFormInput = {
     email: string;
@@ -26,19 +27,19 @@ type IFormInput = {
 };
 
 const Signup: React.FC = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // const state = useSelector((state: RootState) => state);
     // const { signup, authentication } = useSelector((state: RootState) => ({
     //     signup: state.signup,
     //     authentication: state.authentication
     // }));
     const { signup, authentication } = useSelector(selectSignupAndAuthentication);
-    const dispatch = useDispatch<ThunkDispatch<RootState, null, SignupActionTypes>>();
+    const dispatch = useDispatch<ThunkDispatch<RootState, null, SignupActionTypes | NavigateActionType>>();
     const { isLoading, isSubmitting, isSubscribed, signupFormData } = signup;
 
     React.useEffect(() => {
         if (authentication.authenticated) {
-            navigate("/dashboard");
+            dispatch(navigate("/dashboard"));
         }
     }, [authentication.authenticated, navigate]);
 

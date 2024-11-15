@@ -6,16 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 interface NotificationState {
     message: string;
     type: string;
-    
+
 }
 
-interface NotificationProps {
-    notifications: NotificationState[];
-    clearNotification: () => void;
-}
+// interface NotificationProps {
+//     notifications: NotificationState[];
+//     clearNotification: () => void;
+// }
 
-const Notification: React.FC<NotificationProps> = ({ }) => {
-    // useEffect(() => {
+const Notification: React.FC = ({ }) => {
+    // useEffect(() => {5
     //     notifications.forEach((notification) => {
     //         toast(notification.message, {
 

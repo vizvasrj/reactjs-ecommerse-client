@@ -1,0 +1,1 @@
+export const NAVIGATE = 'src/Navigate/NAVIGATE';
