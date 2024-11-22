@@ -8,6 +8,7 @@ import { getPaymentStatus } from "./actions";
 import { useEffect } from "react";
 import { CircularProgress, Card, CardContent, Typography } from '@mui/material';
 
+import { useLocation } from "react-router-dom";
 
 const Callback: React.FC = () => {
     const dispatch = useDispatch<ThunkDispatch<RootState, null, PaymentActionTypes | NavigateActionType>>();
@@ -15,7 +16,11 @@ const Callback: React.FC = () => {
     const loading = useSelector((state: RootState) => state.payment.loading);
 
     // * this should be something more state
-    const orderId = localStorage.getItem('orderId');
+    // const orderId = localStorage.getItem('orderId');
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const orderId = searchParams.get('order_id');
+
 
     useEffect(() => {
         if (orderId) {

@@ -90,6 +90,7 @@ const Navigation = () => {
     }
 
     const handleToggleMenu = () => {
+        console.log("handle1    ");
         dispatch(fetchStoreCategories());
         dispatch(toggleMenu());
     }
@@ -323,9 +324,6 @@ const Navigation = () => {
                                                 Sign Out
                                             </DropdownItem>
 
-                                            <a href='/dashboard' className='dropdown-item'>
-                                                Dashboard
-                                            </a>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
                                 ) : (
@@ -368,7 +366,7 @@ const Navigation = () => {
                     className={
                         isCartOpen ? 'drawer-backdrop dark-overflow' : 'drawer-backdrop'
                     }
-                    onClick={toggleCart}
+                    onClick={handleToggleCart}
                 />
             </div>
 
@@ -384,7 +382,7 @@ const Navigation = () => {
                     className={
                         isMenuOpen ? 'drawer-backdrop dark-overflow' : 'drawer-backdrop'
                     }
-                    onClick={toggleMenu}
+                    onClick={handleToggleMenu}
                 />
             </div>
         </header>

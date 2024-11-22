@@ -21,7 +21,8 @@ import { ReviewActionTypes } from '../Review/interface';
 import { fetchStoreProduct, productShopChange } from '../Product/actions';
 import { addProductReview, reviewChange } from '../Review/actions';
 import { fetchProductReviews } from '../Review/actions';
-import { handleAddToCart, handleRemoveFromCart } from '../Cart/actions';
+import { handleAddToCart, handleAddProductToCart, handleRemoveFromCart, clearCart } from '../Cart/actions';
+import { SelectOptionType } from '../../components/Common/SelectOption';
 
 interface ShopFormErrors {
     quantity: string;
@@ -77,9 +78,13 @@ const ProductPage: React.FC = () => {
         }
     }, [slug]);
 
+    const handleClearCart = () => {
+        dispatch(clearCart());
+    }
+
     // const                        reviewChange={reviewChange}
     // addReview={addProductReview}
-    const handleReviewChange = (name: string, value: string | number) => {
+    const handleReviewChange = (name: string, value: string | number | boolean | SelectOptionType) => {
         dispatch(reviewChange(name, value));
     }
 
@@ -144,6 +149,7 @@ const ProductPage: React.FC = () => {
                                                 dispatch(productShopChange(name, value));
                                             }}
                                         />
+                                        <div onClick={() => console.log(productShopData)}>productShopData</div>
                                     </div>
                                     <div className='my-4 item-share'>
                                         <SocialShare product={product} />
@@ -165,10 +171,15 @@ const ProductPage: React.FC = () => {
                                                 text='Add To Bag'
                                                 className='bag-btn'
                                                 icon={<BagIcon />}
-                                                onClick={() => dispatch(handleAddToCart(product))}
+                                                onClick={() => dispatch(handleAddProductToCart(product))}
                                             />
                                         )}
                                     </div>
+                                    <Button
+                                        variant="primary"
+                                        text="clear cart"
+                                        onClick={handleClearCart}
+                                    />
                                 </div>
                             </div>
                         </Col>

@@ -9,18 +9,21 @@ import React from 'react';
 import Select, { ActionMeta, MultiValue, SingleValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-interface SelectOptionProps<T extends string | number> {
+export type SelectOptionValueType = string | number | boolean;
+export type SelectOptionType = { value: SelectOptionValueType; label: string };
+
+interface SelectOptionProps<T extends string | number | boolean> {
     disabled?: boolean;
     error?: string;
     label?: string;
     multi?: boolean;
-    options: { value: T; label: string }[];
-    defaultValue?: { value: T; label: string }[];
-    value?: { value: T; label: string } | { value: T; label: string }[];
-    handleSelectChange: (value: { value: T; label: string }[] | { value: T; label: string }) => void;
+    options: SelectOptionType[];
+    defaultValue?: SelectOptionType[];
+    value?: SelectOptionType | SelectOptionType[];
+    handleSelectChange: (value: SelectOptionType[] | SelectOptionType) => void;
 }
 
-const SelectOption: React.FC<SelectOptionProps<string | number>> = ({
+const SelectOption: React.FC<SelectOptionProps<string | number | boolean>> = ({
     disabled,
     error,
     label,
@@ -31,14 +34,16 @@ const SelectOption: React.FC<SelectOptionProps<string | number>> = ({
     handleSelectChange,
 }) => {
     const _handleSelectChange = (
-        newValue: MultiValue<{ value: string | number; label: string }> |
-            SingleValue<{ value: string | number; label: string }> | null,
-        actionMeta: ActionMeta<{ value: string | number; label: string }>
+        newValue: MultiValue<SelectOptionType> | SingleValue<SelectOptionType> | null,
+        actionMeta: ActionMeta<SelectOptionType>
     ) => {
+        console.log("from SelectOption", typeof newValue, newValue);
         if (Array.isArray(newValue)) {
-            handleSelectChange(newValue as { value: string | number; label: string }[]);
+            handleSelectChange(newValue as SelectOptionType[]);
+        } else if (typeof newValue === 'object' && newValue !== null) {
+            handleSelectChange(newValue as SelectOptionType);
         } else if (newValue) {
-            handleSelectChange([newValue as { value: string | number; label: string }]);
+            handleSelectChange([newValue as SelectOptionType]);
         } else {
             handleSelectChange([]);
         }

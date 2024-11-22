@@ -35,6 +35,10 @@ const Cart: React.FC = () => {
         dispatch(handleCheckout());
     }
 
+    const handleToggleCart = () => {
+        dispatch(toggleCart());
+    }
+
     return (
         <div className='cart'>
             <div className='cart-header'>
@@ -44,7 +48,7 @@ const Cart: React.FC = () => {
                         variant='empty'
                         ariaLabel='close the cart'
                         icon={<CloseIcon />}
-                        onClick={toggleCart}
+                        onClick={handleToggleCart}
                     />
                 )}
             </div>

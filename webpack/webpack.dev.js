@@ -77,7 +77,7 @@ const config = {
     ],
     devServer: {
         port: 8080,
-        open: true,
+        // open: true,
         // inline: true,
         compress: true,
         host: '0.0.0.0',

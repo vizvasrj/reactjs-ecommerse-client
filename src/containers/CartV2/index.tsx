@@ -50,7 +50,7 @@ const CartV2: React.FC = () => {
                 <Route path='/address/edit/:id' element={<Edit />} /> */}
 
 
-                <Route path="/payment" element={<Payment />} />
+                <Route path="/payment/*" element={<Payment />} />
                 <Route path="/review" element={<Review />} />
             </Routes>
             <Checkout

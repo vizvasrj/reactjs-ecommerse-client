@@ -28,9 +28,11 @@ const AuthSuccess: React.FC = () => {
     }, [location.search, setAuth]);
 
     const navigate = useNavigate();
-    if (authenticated) {
-        navigate('/dashboard');
-    }
+    useEffect(() => {
+        if (authenticated) {
+            navigate('/dashboard');
+        }
+    }, [authenticated]);
 
     return <LoadingIndicator />;
 };

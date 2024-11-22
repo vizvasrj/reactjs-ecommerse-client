@@ -52,7 +52,7 @@ const OrderMeta: React.FC<OrderMetaProps> = ({ order, cancelOrder, onBack }) => 
                         </Col>
                         <Col xs='8'>
                             <span className='order-label one-line-ellipsis'>{` ${formatDate(
-                                order.createdAt
+                                order.created
                             )}`}</span>
                         </Col>
                     </Row>

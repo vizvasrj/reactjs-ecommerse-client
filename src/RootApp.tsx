@@ -19,7 +19,6 @@ import setToken from "./utils/token";
 import { SET_AUTH } from "./containers/Authentication/constants";
 console.log(process.env.API_URL, "from rootapp.tsx");
 
-
 const store = configureStore({
     reducer: rootReducer,
     devTools: process.env.NODE_ENV !== 'production',

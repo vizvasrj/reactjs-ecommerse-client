@@ -35,12 +35,13 @@ import { fetchProfile } from "../Account/action";
 import { AccountAction } from "../Account/action";
 import { ThunkDispatch } from "redux-thunk";
 import CartV2 from "../CartV2";
+import { setCartId } from "../Cart/actions";
+import { CartActionTypes } from "../Cart/interface";
 // import { fetchStoreCategories } from "../Category/actions";
 // import { FetchCategoriesAction } from "../Category/interface";
 // import { fetchStoreBrands } from "../Brand/actions";
 const Application: React.FC = () => {
-    const dispatch = useDispatch<ThunkDispatch<RootState, null, AccountAction>>();
-
+    const dispatch = useDispatch<ThunkDispatch<RootState, null, AccountAction | CartActionTypes>>();
     const handleStorage = useCallback((e: StorageEvent) => {
         if (e.key === 'CART_ITEMS') {
             dispatch(handleCart());

@@ -33,6 +33,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
                     <OrderItems
                         order={order}
                         user={user}
+                        cancelOrder={cancelOrder}
                         updateOrderItemStatus={updateOrderItemStatus}
                     />
                 </Col>

@@ -43,59 +43,132 @@ import toastConfig from '../../utils/toastConfig';
 // Handle Add To Cart
 export const handleAddToCart = (product: Product) => {
     return (dispatch: ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | ProductActionTypes>, getState: () => RootState) => {
-        const productShopData = getState().product.productShopData;
-        const quantity = Number(productShopData.quantity);
-        if (product.price) {
-            const totalPrice = quantity * product.price;
+        try {
+            const productShopData = getState().product.productShopData;
+            const quantity = Number(productShopData.quantity);
+            if (product.price) {
+                const totalPrice = quantity * product.price;
 
-            const updatedProduct: CartItem = {
-                ...product,
-                quantity,
-                totalPrice: parseFloat(totalPrice.toFixed(2))
-            };
+                const updatedProduct: CartItem = {
+                    ...product,
+                    quantity,
+                    totalPrice: parseFloat(totalPrice.toFixed(2))
+                };
 
-            const inventory = getState().product.storeProduct.inventory;
-            let result = 0;
-            if (inventory !== undefined) {
-                result = calculatePurchaseQuantity(inventory);
-            }
-
-
-            const rules = {
-                quantity: `min:1|max:${result}`
-            };
-
-            const { isValid, errors } = allFieldsValidation(
-                { quantity: updatedProduct.quantity }, // Validate only quantity
-                rules,
-                {
-                    'min.quantity': 'Quantity must be at least 1.',
-                    'max.quantity': `Quantity may not be greater than ${result}.`
+                const inventory = getState().product.storeProduct.inventory;
+                let result = 0;
+                if (inventory !== undefined) {
+                    result = calculatePurchaseQuantity(inventory);
                 }
-            );
 
-            if (!isValid && errors) {
-                return dispatch({ type: SET_PRODUCT_SHOP_FORM_ERRORS, payload: errors });
+
+                const rules = {
+                    quantity: `min:1|max:${result}`
+                };
+
+                const { isValid, errors } = allFieldsValidation(
+                    { quantity: updatedProduct.quantity }, // Validate only quantity
+                    rules,
+                    {
+                        'min.quantity': 'Quantity must be at least 1.',
+                        'max.quantity': `Quantity may not be greater than ${result}.`
+                    }
+                );
+
+                if (!isValid && errors) {
+                    return dispatch({ type: SET_PRODUCT_SHOP_FORM_ERRORS, payload: errors });
+                }
+
+                dispatch({
+                    type: RESET_PRODUCT_SHOP
+                });
+
+                dispatch<AddToCartAction>({
+                    type: ADD_TO_CART,
+                    payload: updatedProduct
+                });
+
+                const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS) || '[]') as CartItem[];
+                const newCartItems = [...cartItems, updatedProduct];
+                localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
+
+                dispatch(calculateCartTotal());
+                dispatch(toggleCart());
             }
-
-            dispatch({
-                type: RESET_PRODUCT_SHOP
-            });
-
-            dispatch<AddToCartAction>({
-                type: ADD_TO_CART,
-                payload: updatedProduct
-            });
-
-            const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS) || '[]') as CartItem[];
-            const newCartItems = [...cartItems, updatedProduct];
-            localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
-
-            dispatch(calculateCartTotal());
-            dispatch(toggleCart());
+        } catch (error) {
+            handleError(error, dispatch);
         }
     };
 };
+
+export const handleAddProductToCart = (product: Product) => {
+    return async (dispatch: ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | ProductActionTypes>, getState: () => RootState) => {
+        try {
+            const productShopData = getState().product.productShopData;
+            const quantity = Number(productShopData.quantity);
+            if (product.price) {
+                const totalPrice = quantity * product.price;
+
+                const updatedProduct: CartItem = {
+                    ...product,
+                    quantity,
+                    totalPrice: parseFloat(totalPrice.toFixed(2))
+                };
+                console.log(product);
+                const requestProduct = {
+                    quantity: updatedProduct.quantity,
+                    product: product._id
+                };
+
+                const inventory = getState().product.storeProduct.inventory;
+                let result = 0;
+                if (inventory !== undefined) {
+                    result = calculatePurchaseQuantity(inventory);
+                }
+
+
+                const rules = {
+                    quantity: `min:1|max:${result}`
+                };
+
+                const { isValid, errors } = allFieldsValidation(
+                    { quantity: updatedProduct.quantity }, // Validate only quantity
+                    rules,
+                    {
+                        'min.quantity': 'Quantity must be at least 1.',
+                        'max.quantity': `Quantity may not be greater than ${result}.`
+                    }
+                );
+
+                if (!isValid && errors) {
+                    return dispatch({ type: SET_PRODUCT_SHOP_FORM_ERRORS, payload: errors });
+                }
+
+                dispatch({
+                    type: RESET_PRODUCT_SHOP
+                });
+
+                dispatch<AddToCartAction>({
+                    type: ADD_TO_CART,
+                    payload: updatedProduct
+                });
+
+                const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS) || '[]') as CartItem[];
+                const newCartItems = [...cartItems, updatedProduct];
+                localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
+
+                dispatch(calculateCartTotal());
+                dispatch(toggleCart());
+
+                const response = await axios.post(`${API_URL}/cart/add`, requestProduct)
+                dispatch(setCartId(response.data.cartId));
+            }
+        } catch (error) {
+            handleError(error, dispatch);
+        }
+    };
+
+}
 
 // Handle Remove From Cart
 export const handleRemoveFromCart = (product: CartItem) => {

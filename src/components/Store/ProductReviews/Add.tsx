@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col } from 'reactstrap';
-import SelectOption from '../../Common/SelectOption';
+import SelectOption, { SelectOptionType, SelectOptionValueType } from '../../Common/SelectOption';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
@@ -8,7 +8,7 @@ interface ReviewFormData {
     title: string;
     review: string;
     rating: number;
-    isRecommended: number;
+    isRecommended: { value: boolean, label: string };
 }
 
 interface ReviewFormErrors {
@@ -20,7 +20,7 @@ interface ReviewFormErrors {
 
 interface AddProps {
     reviewFormData: ReviewFormData;
-    reviewChange: (name: string, value: string | number) => void;
+    reviewChange: (name: string, value: string | number | boolean | SelectOptionType) => void;
     reviewFormErrors: ReviewFormErrors;
     addReview: () => void;
 }
@@ -95,11 +95,24 @@ const Add: React.FC<AddProps> = ({
                             error={reviewFormErrors['isRecommended']}
                             label={'Will you recommend this product?'}
                             // name={'isRecommended'}
-                            value={{ value: reviewFormData.isRecommended, label: reviewFormData.isRecommended.toString() }}
+                            value={{ value: reviewFormData.isRecommended.value, label: reviewFormData.isRecommended.label }}
                             options={recommedableSelect}
-                            handleSelectChange={value => {
-                                if (typeof value === 'string') {
-                                    reviewChange('isRecommended', value);
+                            handleSelectChange={(value: SelectOptionType | SelectOptionType[]) => {
+                                console.log(value, typeof value);
+                                console.log("reviewFormData.isRecommended", reviewFormData.isRecommended);
+                                if (Array.isArray(value)) {
+                                    // Handle multiple values
+                                    // value.forEach(val => {
+                                    //     console.log(val.value);
+                                    //     // Perform actions with each value
+                                    // });
+                                } else if (typeof value === 'object') {
+                                    // Handle single value
+                                    console.log(value.value);
+                                    // Perform actions with the single value
+                                    const booleanValue = value.value === 1;
+                                    reviewChange('isRecommended', { value: booleanValue, label: value.label });
+                                    // reviewChange('isRecommended', value);
                                 }
 
                             }}

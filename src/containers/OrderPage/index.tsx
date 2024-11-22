@@ -45,6 +45,10 @@ const OrderPage: React.FC = () => {
         dispatch(updateOrderItemStatus(itemId, status));
     }
 
+    const handleCancelOrder = () => {
+        dispatch(cancelOrder());
+    }
+
 
     return (
         <div className='order-page'>
@@ -54,7 +58,7 @@ const OrderPage: React.FC = () => {
                 <OrderDetails
                     order={order}
                     user={user}
-                    cancelOrder={cancelOrder}
+                    cancelOrder={handleCancelOrder}
                     updateOrderItemStatus={handleUpdateOrderItemStatus}
                     onBack={() => {
                         if (window.location.toString().includes('success')) {

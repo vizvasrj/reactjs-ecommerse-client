@@ -11,10 +11,11 @@ interface OrderItemsProps {
     order: Order;
     user: User;
     updateOrderItemStatus: (itemId: string, status: CART_ITEM_STATUS) => void;
+    cancelOrder: () => void;
 }
 
 const OrderItems: React.FC<OrderItemsProps> = (props) => {
-    const { order, user, updateOrderItemStatus } = props;
+    const { order, user, updateOrderItemStatus, cancelOrder } = props;
 
     const renderPopoverContent = (item: any) => {
         const statuses = Object.values(CART_ITEM_STATUS);
@@ -25,7 +26,8 @@ const OrderItems: React.FC<OrderItemsProps> = (props) => {
                     <DropdownItem
                         key={`${s}-${i}`}
                         className={s === item?.status ? 'active' : ''}
-                        onClick={() => updateOrderItemStatus(item._id, s)}
+                        // onClick={() => updateOrderItemStatus(item._id, s)}
+                        onClick={() => cancelOrder()}
                     >
                         {s}
                     </DropdownItem>
@@ -60,7 +62,8 @@ const OrderItems: React.FC<OrderItemsProps> = (props) => {
                                 text='Confirm Cancel'
                                 role='menuitem'
                                 className='cancel-order-btn'
-                                onClick={() => updateOrderItemStatus(item._id, CART_ITEM_STATUS.Cancelled)}
+                                // onClick={() => updateOrderItemStatus(item._id, CART_ITEM_STATUS.Cancelled)}
+                                onClick={() => cancelOrder()}
                             />
                         </div>
                     </DropdownConfirm>

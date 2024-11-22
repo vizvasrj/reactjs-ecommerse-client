@@ -14,7 +14,7 @@ const Product: React.FC = () => {
             <Routes>
                 <Route path='/' element={<List />} />
                 <Route path='/edit/:id' element={<Edit />} />
-                {user.role === ROLES.Admin && (
+                {(user.role === ROLES.Admin || user.role === ROLES.Merchant) && (
                     <Route path='/add' element={<Add />} />
                 )}
                 <Route path='*' element={<Page404 />} />
