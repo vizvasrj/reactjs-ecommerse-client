@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 // import actions from '../../actions';
@@ -13,17 +13,23 @@ import { RootState } from '../../reducer';
 import { toggleCart } from '../Navigation/actions';
 import { handleRemoveFromCart } from './actions';
 import { placeOrder } from '../Order/actions';
-import { CartActionTypes } from './interface';
+import { CartActionTypes, CartItem } from './interface';
 import { ToggleCartAction } from '../Navigation/interface';
 import requireAuth from '../Authentication';
-import { handleShopping, handleCheckout } from './actions';
+import { handleShopping, handleCheckout, getCartByCartID } from './actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { navigate, NavigateActionType } from '../Navigate';
 const Cart: React.FC = () => {
     const dispatch = useDispatch<ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | NavigateActionType>>();
 
-    const { cartItems, cartTotal } = useSelector((state: RootState) => state.cart);
+    const { cartTotal } = useSelector((state: RootState) => state.cart);
     const { isCartOpen } = useSelector((state: RootState) => state.navigation);
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+    useEffect(() => {
+        dispatch(getCartByCartID(setCartItems));
+    }, []);
+
     const authenticated = useSelector((state: RootState) => state.authentication.authenticated);
     const handleHandleShopping = () => {
         dispatch(handleShopping());
@@ -55,8 +61,8 @@ const Cart: React.FC = () => {
             {cartItems.length > 0 ? (
                 <div className='cart-body'>
                     <CartList
-                    // toggleCart={toggleCart}
-                    // cartItems={cartItems}
+                        // toggleCart={toggleCart}
+                        cartItems={cartItems}
                     // handleRemoveFromCart={handleRemoveFromCart}
                     />
                 </div>

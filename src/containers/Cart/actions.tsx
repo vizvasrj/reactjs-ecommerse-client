@@ -160,7 +160,10 @@ export const handleAddProductToCart = (product: Product) => {
                 dispatch(calculateCartTotal());
                 dispatch(toggleCart());
 
-                const response = await axios.post(`${API_URL}/cart/add`, requestProduct)
+                const cartId = localStorage.getItem(CART_ID);
+
+
+                const response = await axios.post(`${API_URL}/cart/add_or_update?cartId=${cartId}`, requestProduct)
                 dispatch(setCartId(response.data.cartId));
             }
         } catch (error) {
@@ -226,6 +229,34 @@ export const handleCart = () => {
         }
     };
 };
+
+export const getCartByCartID = (setCartItems: any) => {
+    return (dispatch: ThunkDispatch<RootState, null, CartActionTypes>, getState: () => RootState) => {
+        try {
+            const cartId = localStorage.getItem(CART_ID);
+            if (cartId) {
+                axios.get(`${API_URL}/cart/${cartId}`)
+                    .then(response => {
+                        console.log(response.data, 'cart by cart id');
+                        setCartItems(response.data.cart);
+                        // const cart = {
+                        //     cartItems: response.data.products,
+                        //     cartTotal: response.data.total,
+                        //     cartId: response.data.cartId
+                        // } as CartState;
+
+                        // dispatch<HandleCartAction>({
+                        //     type: HANDLE_CART,
+                        //     payload: cart
+                        // });
+                        // dispatch(calculateCartTotal());
+                    });
+            }
+        } catch (error) {
+            handleError(error, dispatch);
+        }
+    }
+}
 
 export const handleCheckout = () => {
     return (dispatch: ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | NavigateActionType>) => {

@@ -180,6 +180,17 @@ const ProductPage: React.FC = () => {
                                         text="clear cart"
                                         onClick={handleClearCart}
                                     />
+                                    <Button
+                                        variant='primary'
+                                        disabled={!!(product.inventory && product.inventory <= 0 && (!hasQuantityError(shopFormErrors) || !shopFormErrors.quantity))}
+                                        text='get cart id'
+                                        className='bag-btn'
+                                        icon={<BagIcon />}
+                                        onClick={() => {
+                                            const cartId = localStorage.getItem('cart_id');
+                                            alert(cartId);
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </Col>

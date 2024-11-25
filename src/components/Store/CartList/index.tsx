@@ -10,6 +10,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../../reducer';
 import { CartActionTypes } from '../../../containers/Cart/interface';
 import { ToggleCartAction } from '../../../containers/Navigation/interface';
+import { TrashIcon } from '../../Common/Icon';
 // interface CartItem {
 //     imageUrl: string;
 //     slug: string;
@@ -18,18 +19,18 @@ import { ToggleCartAction } from '../../../containers/Navigation/interface';
 //     quantity: number;
 // }
 
-// interface CartListProps {
-//     cartItems: CartItem[];
-//     // handleRemoveFromCart: (item: CartItem) => void;
-//     // toggleCart: () => void;
-// }
+interface CartListProps {
+    cartItems: CartItem[];
+    // handleRemoveFromCart: (item: CartItem) => void;
+    // toggleCart: () => void;
+}
 
-const CartList: React.FC = () => {
+const CartList: React.FC<CartListProps> = ({ cartItems }) => {
     // const {
     //     // cartItems,
     //     // handleRemoveFromCart
     // } = props;
-    const { cartItems } = useSelector((state: RootState) => state.cart);
+    // const { cartItems } = useSelector((state: RootState) => state.cart);
 
     const dispatch = useDispatch<ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction>>();
 
@@ -66,10 +67,11 @@ const CartList: React.FC = () => {
                                 </Col>
                                 <Col xs='2' className='text-right'>
                                     <Button
+                                        // text='remove'
                                         borderless
                                         variant='empty'
                                         ariaLabel={`remove ${item.name} from cart`}
-                                        icon={<i className='icon-trash' aria-hidden='true' />}
+                                        icon={<TrashIcon />}
                                         onClick={() => handleRemoveFromCartFunction(item)}
                                     />
                                 </Col>
