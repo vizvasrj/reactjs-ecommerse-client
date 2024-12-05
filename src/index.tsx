@@ -12,8 +12,8 @@ import ReactStars from "./components/Package/react-stars";
 // import ResetPasswordForm from "./components/Common/ResetPasswordForm";
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    <React.StrictMode>
-        <RootApp />
-    </React.StrictMode>
+    // <React.StrictMode>
+    <RootApp />
+    // </React.StrictMode>
 
 );

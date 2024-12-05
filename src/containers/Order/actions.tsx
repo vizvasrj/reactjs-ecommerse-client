@@ -9,7 +9,8 @@ import {
     SET_ORDERS_LOADING,
     SET_ADVANCED_FILTERS,
     CLEAR_ORDERS,
-    SET_SELECTED_ADDRESS
+    SET_SELECTED_ADDRESS,
+    SET_CART_ID_FOR_ORDER_TO_PLACE
 } from './constants';
 
 import { clearCart, getCartId } from '../Cart/actions';
@@ -36,6 +37,8 @@ import {
 import { toast } from 'react-toastify';
 import toastConfig from '../../utils/toastConfig';
 import { navigate, NavigateActionType } from "../Navigate";
+import { PaymentActionTypes } from '../Payment/interface';
+import { setPaymentLoading, setRazorpayOrderId } from '../Payment/actions';
 
 export const updateOrderStatus = (value: { itemId: string; status: CART_ITEM_STATUS }): UpdateOrderStatusAction => {
     return {
@@ -215,26 +218,37 @@ export const updateOrderItemStatus = (itemId: string, status: CART_ITEM_STATUS) 
 };
 
 export const addOrder = () => {
-    return async (dispatch: ThunkDispatch<RootState, null, OrderActionTypes | NavigateActionType>, getState: () => RootState) => {
+    return async (dispatch: ThunkDispatch<RootState, null, OrderActionTypes | NavigateActionType | PaymentActionTypes>, getState: () => RootState) => {
         try {
-            const cartId = localStorage.getItem('cart_id');
-            const total = getState().cart.cartTotal;
-            const address = getState().order.selectedAddress;
-            console.log("address", JSON.stringify(address, null, 2));
 
-            if (cartId) {
+            dispatch(setPaymentLoading(true));
+            const cartId = getState().order.cartId;
+            // const total = getState().cart.cartTotal;
+            // i have change selectedAddress to defaultAddress
+            const address = getState().address.defaultAddress;
+            // console.log("address", JSON.stringify(address, null, 2));
+
+            if (cartId && address) {
                 const response = await axios.post(`${API_URL}/order/add`, {
                     cartId,
-                    total,
+                    // total,
                     address
                 });
 
-                dispatch(navigate(`/order/success/${response.data.order._id}`));
-                dispatch(clearCart());
+                // dispatch(navigate(`/order/success/${response.data.order._id}`));
+                // dispatch(clearCart());
+                console.log("i got all values from add order post", response.data.razorpayOrderID, response.data.razorpayId, response.data.order._id)
+                dispatch(setRazorpayOrderId(response.data.razorpayOrderID, response.data.razorpayId, response.data.order._id, response.data.order.amount));
+
+
+            } else {
+                console.log('Cart is empty or address is not selected');
             }
 
         } catch (error) {
             handleError(error, dispatch);
+        } finally {
+            dispatch(setPaymentLoading(false));
         }
     };
 };
@@ -253,6 +267,16 @@ export const placeOrder = (selectedAddress: Address) => {
         // dispatch(toggleCart());
     };
 };
+
+export const setCartIdForOrderToPlace = (cartId: string) => {
+    return (dispatch: ThunkDispatch<RootState, null, OrderActionTypes>) => {
+        console.log("setCartIdForOrderToPlace function", cartId);
+        dispatch({
+            type: SET_CART_ID_FOR_ORDER_TO_PLACE,
+            payload: cartId,
+        });
+    }
+}
 
 export const clearOrders = (): ClearOrdersAction => {
     return {

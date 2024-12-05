@@ -6,7 +6,8 @@ import {
     SET_ORDERS_LOADING,
     SET_ADVANCED_FILTERS,
     CLEAR_ORDERS,
-    SET_SELECTED_ADDRESS
+    SET_SELECTED_ADDRESS,
+    SET_CART_ID_FOR_ORDER_TO_PLACE
 } from './constants';
 
 import { Product } from '../Product/interface';
@@ -143,6 +144,11 @@ export interface SetSelectedAddressAction extends Action {
     payload: Address
 }
 
+export interface SetCartIdForOrderToPlaceAction extends Action {
+    type: typeof SET_CART_ID_FOR_ORDER_TO_PLACE;
+    payload: string;
+}
+
 export type OrderActionTypes =
     | UpdateOrderStatusAction
     | SetOrdersLoadingAction
@@ -151,4 +157,5 @@ export type OrderActionTypes =
     | FetchOrderAction
     | ClearOrdersAction
     | SetAdvancedFiltersAction
-    | SetSelectedAddressAction;
+    | SetSelectedAddressAction
+    | SetCartIdForOrderToPlaceAction;

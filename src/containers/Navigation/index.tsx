@@ -360,7 +360,8 @@ const Navigation = () => {
                 aria-hidden={`${isCartOpen ? false : true}`}
             >
                 <div className='mini-cart'>
-                    <Cart />
+                    {/* //TODO commented cart */}
+                    {/* <Cart /> */}
                 </div>
                 <div
                     className={

@@ -243,8 +243,10 @@ export const updateAddress = () => {
             if (response.data.success === true) {
                 // dispatch(success(successfulOptions));
                 toast.success(successfulOptions.title, toastConfig);
+                console.log("i have to go back here");
+                dispatch<NavigateActionType>(navigate(-1))
 
-                dispatch(navigate(-1));
+                // dispatch(navigate(-1));
             }
         } catch (error) {
             handleError(error, dispatch);

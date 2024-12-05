@@ -21,19 +21,21 @@ import { CartActionTypes } from '../Cart/interface';
 import { ToggleCartAction } from '../Navigation/interface';
 import { handleShopping, handleCheckout } from '../Cart/actions';
 import { ThunkDispatch } from 'redux-thunk';
-import { navigate, NavigateActionType } from '../Navigate';
-
+// import { navigate, NavigateActionType } from '../Navigate';
+import { useNavigate } from 'react-router';
 const CartV2: React.FC = () => {
     const dispatch = useDispatch<ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | NavigateActionType>>();
     const authenticated = useSelector((state: RootState) => state.authentication.authenticated);
     const handleHandleShopping = () => {
         dispatch(handleShopping());
     }
+    const navigate = useNavigate();
     const handlePlaceOrder = () => {
         if (location.pathname === '/cart/address') {
-            dispatch(navigate('/cart/payment'));
+            navigate('/cart/payment');
+
         } else {
-            dispatch(navigate('/cart/address'));
+            navigate('/cart/address');
         }
     };
     const handleHandleCheckout = () => {

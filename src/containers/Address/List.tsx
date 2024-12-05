@@ -9,7 +9,8 @@ import { RootState } from '../../reducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { Address, AddressActionTypes } from './interface';
 import { navigate, NavigateActionType } from '../Navigate';
-
+import Button from '../../components/Common/Button';
+import { useNavigate } from 'react-router-dom';
 
 const List: React.FC = () => {
     const dispatch = useDispatch<ThunkDispatch<RootState, null, AddressActionTypes | NavigateActionType>>();
@@ -17,10 +18,22 @@ const List: React.FC = () => {
         dispatch(fetchAddresses());
     }, []);
     const addresses = useSelector((state: RootState) => state.address.addresses) as Address[];
-
+    const { cartId } = useSelector((state: RootState) => state.order);
     const handleSetDefaultAddress = (id: string) => {
         dispatch(setDefaultAddress(id));
     }
+    const history = useNavigate();
+
+    if (location.pathname === '/cart/address') {
+        if (!cartId) {
+            // dispatch(navigate('/'));
+            history('/', { replace: true });
+
+            return null;
+        }
+
+    }
+
     return (
         <>
             <SubPage
@@ -36,7 +49,9 @@ const List: React.FC = () => {
                 ) : (
                     <NotFound message='No addresses found.' />
                 )}
+
             </SubPage>
+
         </>
     );
 };

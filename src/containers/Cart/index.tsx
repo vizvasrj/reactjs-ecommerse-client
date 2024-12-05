@@ -19,10 +19,13 @@ import requireAuth from '../Authentication';
 import { handleShopping, handleCheckout, getCartByCartID } from './actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { navigate, NavigateActionType } from '../Navigate';
+import { setCartIdForOrderToPlace } from '../Order/actions';
+import { SetCartIdForOrderToPlaceAction } from '../Order/interface';
 const Cart: React.FC = () => {
-    const dispatch = useDispatch<ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | NavigateActionType>>();
+    const dispatch = useDispatch<ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | NavigateActionType | SetCartIdForOrderToPlaceAction>>();
 
-    const { cartTotal } = useSelector((state: RootState) => state.cart);
+    const { cartTotal, cartId } = useSelector((state: RootState) => state.cart);
+    const { cartId: cartIdForOrderToPlace } = useSelector((state: RootState) => state.order);
     const { isCartOpen } = useSelector((state: RootState) => state.navigation);
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
@@ -45,6 +48,9 @@ const Cart: React.FC = () => {
         dispatch(toggleCart());
     }
 
+    useEffect(() => {
+        dispatch(setCartIdForOrderToPlace(cartId));
+    }, [cartId])
     return (
         <div className='cart'>
             <div className='cart-header'>
@@ -88,13 +94,5 @@ const Cart: React.FC = () => {
     // }
 }
 
-// const mapStateToProps = (state: any) => {
-//     return {
-//         isCartOpen: state.navigation.isCartOpen,
-//         cartItems: state.cart.cartItems,
-//         cartTotal: state.cart.cartTotal,
-//         authenticated: state.authentication.authenticated
-//     };
-// };
 
 export default requireAuth(Cart);

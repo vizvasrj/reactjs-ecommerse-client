@@ -1,4 +1,4 @@
-import { CREATE_PAYMENT_ORDER, SET_PAYMENT_LOADING, GET_PAYMENT_STATUS } from './constants';
+import { CREATE_PAYMENT_ORDER, SET_PAYMENT_LOADING, GET_PAYMENT_STATUS, SET_RAZORPAY_PAYMENT_ORDER_ID } from './constants';
 
 export interface CreatePaymentOrderAction {
     type: typeof CREATE_PAYMENT_ORDER;
@@ -37,6 +37,16 @@ export interface GetPaymentStatusAction {
     };
 }
 
-export type PaymentActionTypes = CreatePaymentOrderAction | GetPaymentStatusAction | SetPaymentLoadingAction;
+export interface SetPaymentOrderId {
+    type: typeof SET_RAZORPAY_PAYMENT_ORDER_ID;
+    payload: {
+        razorPayOrderId: string;
+        key: string;
+        orderId: string;
+        amount: number;
+    };
+}
+
+export type PaymentActionTypes = CreatePaymentOrderAction | GetPaymentStatusAction | SetPaymentLoadingAction | SetPaymentOrderId;
 
 // export type PaymentActionTypes = CreatePaymentOrderAction | PaymentCallbackAction | SetPaymentLoadingAction;

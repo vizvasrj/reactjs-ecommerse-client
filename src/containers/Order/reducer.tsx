@@ -6,7 +6,8 @@ import {
     SET_ORDERS_LOADING,
     SET_ADVANCED_FILTERS,
     CLEAR_ORDERS,
-    SET_SELECTED_ADDRESS
+    SET_SELECTED_ADDRESS,
+    SET_CART_ID_FOR_ORDER_TO_PLACE
 } from './constants';
 import { Product } from '../Product/interface';
 import { Address } from '../Address/interface';
@@ -35,6 +36,7 @@ interface State {
     isLoading: boolean;
     advancedFilters: AdvancedFilters;
     selectedAddress: Address;
+    cartId?: string;
 }
 
 const initialState: State = {
@@ -104,6 +106,11 @@ const orderReducer = (state: State = initialState, action: any) => {
             return {
                 ...state,
                 selectedAddress: action.payload
+            };
+        case SET_CART_ID_FOR_ORDER_TO_PLACE:
+            return {
+                ...state,
+                cartId: action.payload
             };
         default:
             return state;

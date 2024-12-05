@@ -19,6 +19,15 @@ interface AddressListProps {
 }
 
 const AddressList: React.FC<AddressListProps> = ({ addresses, setDefaultAddress, defaultAddress }) => {
+    React.useEffect(() => {
+        if (addresses.length > 0 && setDefaultAddress) {
+            const defaultAddr = addresses.find(address => address.isDefault);
+            if (defaultAddr) {
+                setDefaultAddress(defaultAddr._id);
+            }
+        }
+    }, []);
+
     return (
         <div className='a-list'>
             {addresses?.map((address, index) => (

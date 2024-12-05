@@ -63,7 +63,7 @@ const cartReducer = (state = initialState, action: CartActionTypes): CartState =
                 ...state,
                 cartItems: action.payload.cartItems,
                 cartTotal: action.payload.cartTotal,
-                cartId: action.payload.cartId
+                cartId: action.payload.cartId || ''
             };
             return newState;
         case SET_CART_ID:

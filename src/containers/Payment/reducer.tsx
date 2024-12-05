@@ -2,6 +2,7 @@ import {
     CREATE_PAYMENT_ORDER,
     SET_PAYMENT_LOADING,
     GET_PAYMENT_STATUS,
+    SET_RAZORPAY_PAYMENT_ORDER_ID,
 } from './constants';
 import { PaymentActionTypes } from './interface';
 
@@ -22,7 +23,13 @@ interface PaymentState {
         message: string;
         paymentLink: string;
         paymentSessionId: string;
-    }
+    },
+    razorpay: {
+        razorPayOrderId: string;
+        key: string;
+        orderId: string
+        amount: number;
+    };
 }
 
 const initialState: PaymentState = {
@@ -42,6 +49,12 @@ const initialState: PaymentState = {
         message: '',
         paymentLink: '',
         paymentSessionId: '',
+    },
+    razorpay: {
+        razorPayOrderId: '',
+        key: '',
+        orderId: '',
+        amount: 0,
     }
 };
 
@@ -74,6 +87,17 @@ const paymentReducer = (state = initialState, action: PaymentActionTypes): Payme
                         paymentMethod: action.payload.order.paymentMethod,
                         createdAt: action.payload.order.createdAt,
                     },
+                },
+            };
+
+        case SET_RAZORPAY_PAYMENT_ORDER_ID:
+            return {
+                ...state,
+                razorpay: {
+                    razorPayOrderId: action.payload.razorPayOrderId,
+                    key: action.payload.key,
+                    orderId: action.payload.orderId,
+                    amount: action.payload.amount,
                 },
             };
         default:

@@ -25,6 +25,7 @@ const Callback: React.FC = () => {
     useEffect(() => {
         if (orderId) {
             dispatch(getPaymentStatus(orderId));
+            console.log("orderId", orderId);
         }
     }, [orderId, dispatch]);
 

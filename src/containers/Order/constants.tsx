@@ -7,3 +7,4 @@ export const SET_ORDERS_LOADING = 'src/Orders/SET_ORDERS_LOADING';
 export const SET_ADVANCED_FILTERS = 'src/Orders/SET_ADVANCED_FILTERS';
 export const CLEAR_ORDERS = 'src/Orders/CLEAR_ORDERS';
 export const SET_SELECTED_ADDRESS = 'src/Order/SET_SELECTED_ADDRESS';
+export const SET_CART_ID_FOR_ORDER_TO_PLACE = 'src/Order/SET_CART_ID_FOR_ORDER_TO_PLACE';
