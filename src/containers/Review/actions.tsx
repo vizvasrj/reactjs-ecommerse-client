@@ -258,7 +258,7 @@ export const getProductReviewsSummary = (reviews: Review[]): ReviewSummary => {
                     totalSummary += 1;
                     break;
                 default:
-                    0;
+                    // 0;
                     break;
             }
         });

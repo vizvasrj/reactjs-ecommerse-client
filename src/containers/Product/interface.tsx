@@ -18,7 +18,8 @@ import {
     SET_ADVANCED_FILTERS,
     RESET_ADVANCED_FILTERS,
     SET_PRODUCT_SHOP_FORM_ERRORS,
-    RESET_PRODUCT_SHOP
+    RESET_PRODUCT_SHOP,
+    PRODUCT_EDIT
 } from './constants';
 import { Brand } from '../Brand/interface';
 
@@ -52,6 +53,11 @@ export interface Product {
 export interface FetchProductsAction {
     type: typeof FETCH_PRODUCTS;
     payload: Product[];
+}
+
+export interface ProductUpdateSetAction {
+    type: typeof PRODUCT_EDIT;
+    payload: any;
 }
 
 export interface FetchStoreProductsAction {
@@ -158,4 +164,5 @@ export type ProductActionTypes =
     | SetAdvancedFiltersAction
     | ResetAdvancedFiltersAction
     | SetProductShopFormErrorsAction
-    | ResetProductShopAction;
+    | ResetProductShopAction
+    | ProductUpdateSetAction;

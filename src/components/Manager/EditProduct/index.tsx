@@ -13,7 +13,7 @@ import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 import { Brand } from '../../../containers/Brand/interface';
-
+import { SelectOptionValueType, SelectOptionType } from '../../Common/SelectOption';
 interface EditProductProps {
     product: Product;
     formErrors: any;
@@ -58,6 +58,18 @@ const EditProduct: React.FC<EditProductProps> = ({ product, formErrors, brands }
         handleProductChange(name, value);
     };
 
+    const handleSelectChange2 = (selectedOptions: SelectOptionType[] | SelectOptionType) => {
+        console.log('selectedOptions', selectedOptions);
+        if (Array.isArray(selectedOptions)) {
+            handleProductChange('taxable', selectedOptions[0].value);
+        }
+        else {
+            handleProductChange('taxable', selectedOptions.value);
+        }
+    };
+    console.log(product);
+
+
     // rest of the component remains the same
     return (
         <div className='edit-product'>
@@ -78,9 +90,7 @@ const EditProduct: React.FC<EditProductProps> = ({ product, formErrors, brands }
                             name={'name'}
                             placeholder={'Product Name'}
                             value={product.name || ''}
-                            onInputChange={(name, value) => {
-                                productChange(name, value);
-                            }}
+                            onInputChange={handleProductChange}
                         />
                     </Col>
                     <Col xs='12'>
@@ -140,7 +150,7 @@ const EditProduct: React.FC<EditProductProps> = ({ product, formErrors, brands }
                             onInputChange={handleProductChange}
                         />
                     </Col>
-                    <Col xs='12' md='12'>
+                    {/* <Col xs='12' md='12'>
                         <SelectOption
                             error={formErrors['taxable']}
                             label={'Taxable'}
@@ -148,21 +158,21 @@ const EditProduct: React.FC<EditProductProps> = ({ product, formErrors, brands }
                             // name={'taxable'}
                             value={product.taxable ? taxableSelect[0] : taxableSelect[1]}
                             options={taxableSelect}
-                            handleSelectChange={handleSelectChange('taxable')}
+                            handleSelectChange={handleSelectChange2}
                         />
-                    </Col>
-                    {user.role === ROLES.Admin && (
-                        <Col xs='12' md='12'>
-                            <SelectOption
-                                error={formErrors['brand']}
-                                label={'Select Brand'}
-                                multi={false}
-                                value={product.brand}
-                                options={brands?.map(brand => ({ value: brand.value, label: brand.label })) || []}
-                                handleSelectChange={handleSelectChange('select brands')}
-                            />
-                        </Col>
-                    )}
+                    </Col> */}
+                    {/* {user.role === ROLES.Admin && (
+                        // <Col xs='12' md='12'>
+                        //     <SelectOption
+                        //         error={formErrors['brand']}
+                        //         label={'Select Brand'}
+                        //         multi={false}
+                        //         value={product.brand}
+                        //         options={brands?.map(brand => ({ value: brand.value, label: brand.label })) || []}
+                        //         handleSelectChange={handleSelectChange('select brands')}
+                        //     />
+                        // </Col>
+                    )} */}
                     <Col xs='12' md='12' className='mt-3 mb-2'>
                         <Switch
                             id={`enable-product-${product._id}`}

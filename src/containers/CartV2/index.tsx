@@ -8,12 +8,6 @@ import OrderAddAddress from './OrderAddAddress';
 import Edit from '../Address/Edit';
 import Address from '../Address';
 import Checkout from '../../components/Store/Checkout';
-
-// Placeholder components for each step
-// const Cart = () => <div>Cart</div>;
-// const Address = () => <div>Address</div>;
-// const Payment = () => <div>Payment</div>;
-const Review = () => <div>Review</div>;
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducer';
 import { toggleCart } from '../Navigation/actions';
@@ -22,14 +16,21 @@ import { ToggleCartAction } from '../Navigation/interface';
 import { handleShopping, handleCheckout } from '../Cart/actions';
 import { ThunkDispatch } from 'redux-thunk';
 // import { navigate, NavigateActionType } from '../Navigate';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
+
+// Placeholder components for each step
+// const Cart = () => <div>Cart</div>;
+// const Address = () => <div>Address</div>;
+// const Payment = () => <div>Payment</div>;
+const Review = () => <div>Review</div>;
 const CartV2: React.FC = () => {
-    const dispatch = useDispatch<ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction | NavigateActionType>>();
+    const dispatch = useDispatch<ThunkDispatch<RootState, null, CartActionTypes | ToggleCartAction>>();
     const authenticated = useSelector((state: RootState) => state.authentication.authenticated);
     const handleHandleShopping = () => {
         dispatch(handleShopping());
     }
     const navigate = useNavigate();
+    const location = useLocation();
     const handlePlaceOrder = () => {
         if (location.pathname === '/cart/address') {
             navigate('/cart/payment');

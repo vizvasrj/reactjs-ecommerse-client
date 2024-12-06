@@ -59,7 +59,8 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=development npx webpack-dev-server --config webpack/webpack.dev.js",
         "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build-real": "react-scripts build",
+        "build": "cross-env NODE_ENV=production npx webpack --mode production --config webpack/webpack.prod.js",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "clean": "rimraf dist"
@@ -89,6 +90,7 @@
         "@types/react": "^18.3.4",
         "@types/react-dom": "^18.3.0",
         "cross-env": "^7.0.3",
+        "css-minimizer-webpack-plugin": "^7.0.0",
         "html-webpack-plugin": "^5.6.0",
         "ts-loader": "^9.5.1",
         "webpack": "^5.93.0",

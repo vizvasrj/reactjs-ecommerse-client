@@ -16,7 +16,8 @@ import {
     FETCH_PRODUCTS_SELECT,
     SET_PRODUCTS_LOADING,
     SET_ADVANCED_FILTERS,
-    RESET_ADVANCED_FILTERS
+    RESET_ADVANCED_FILTERS,
+    PRODUCT_EDIT
 } from './constants';
 
 import { Notification } from 'react-notification-system';
@@ -206,7 +207,7 @@ export const fetchProducts = () => {
 };
 
 // fetch product api
-export const fetchProduct = (id: string) => {
+export const fetchProduct = (id: string, ifEditPage?: boolean) => {
     return async (dispatch: ThunkDispatch<RootState, null, ProductActionTypes>, getState: () => RootState) => {
         try {
             const response = await axios.get(`${API_URL}/product/${id}`);
@@ -225,10 +226,18 @@ export const fetchProduct = (id: string) => {
 
             const product = { ...response.data.product, inventory };
 
-            dispatch({
-                type: FETCH_PRODUCT,
-                payload: product
-            });
+            if (ifEditPage) {
+                dispatch({
+                    type: PRODUCT_EDIT,
+                    payload: product
+                });
+            } else {
+                dispatch({
+                    type: FETCH_PRODUCT,
+                    payload: product
+                });
+
+            }
         } catch (error) {
             handleError(error, dispatch);
         }
@@ -373,11 +382,9 @@ export const updateProduct = () => {
                 description: 'required|max:200',
                 quantity: 'required|numeric',
                 price: 'required|numeric',
-                taxable: 'required',
-                brand: 'required'
             };
 
-            const product = getState().product.product;
+            const product = getState().product.productFormData;
 
             const brand = unformatSelectOptions([product.brand]);
 
@@ -388,8 +395,8 @@ export const updateProduct = () => {
                 description: product.description,
                 quantity: product.quantity,
                 price: product.price,
-                taxable: product.taxable,
-                brand: brand && brand.length != 0 ? brand : null
+                // taxable: product.taxable,
+                // brand: brand && brand.length != 0 ? brand : null
             };
 
             const { isValid, errors } = allFieldsValidation(newProduct, rules, {
@@ -404,18 +411,19 @@ export const updateProduct = () => {
                 'max.description':
                     'Description may not be greater than 200 characters.',
                 'required.quantity': 'Quantity is required.',
-                'required.price': 'Price is required.',
-                'required.taxable': 'Taxable is required.',
-                'required.brand': 'Brand is required.'
+                'required.price': 'Price is required.'
             });
-
+            console.log("errors", errors);
             if (!isValid && errors) {
-                return dispatch({
+                dispatch({
                     type: SET_PRODUCT_FORM_EDIT_ERRORS,
                     payload: errors
                 });
+                return;
+
             }
 
+            console.log("response");
             const response = await axios.put(`${API_URL}/product/${product._id}`, {
                 product: newProduct
             });
@@ -491,6 +499,7 @@ export const activateProduct = (id: string, value: boolean) => {
         }
     };
 };
+
 
 // delete product api
 export const deleteProduct = (id: string) => {

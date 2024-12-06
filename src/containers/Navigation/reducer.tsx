@@ -1,4 +1,13 @@
 import { NavigationState } from "./interface";
+import { NavigationActionTypes } from "./interface";
+import {
+    TOGGLE_MENU,
+    TOGGLE_CART,
+    TOGGLE_BRAND,
+    SEARCH_CHANGE,
+    SUGGESTIONS_FETCH_REQUEST,
+    SUGGESTIONS_CLEAR_REQUEST
+} from './constants';
 
 // interface State {
 //     isMenuOpen: boolean;
@@ -16,16 +25,7 @@ const initialState: NavigationState = {
     searchSuggestions: []
 };
 
-import { NavigationActionTypes } from "./interface";
 
-import {
-    TOGGLE_MENU,
-    TOGGLE_CART,
-    TOGGLE_BRAND,
-    SEARCH_CHANGE,
-    SUGGESTIONS_FETCH_REQUEST,
-    SUGGESTIONS_CLEAR_REQUEST
-} from './constants';
 
 
 const navigationReducer = (state: NavigationState = initialState, action: NavigationActionTypes) => {

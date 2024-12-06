@@ -2,7 +2,7 @@
 export interface InputProps {
     autoComplete?: string;
     type: string;
-    value: string;
+    value?: string;
     error?: string;
     step?: number;
     decimals?: boolean;

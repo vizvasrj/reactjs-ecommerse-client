@@ -10,7 +10,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Address, AddressActionTypes } from './interface';
 import { navigate, NavigateActionType } from '../Navigate';
 import Button from '../../components/Common/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const List: React.FC = () => {
     const dispatch = useDispatch<ThunkDispatch<RootState, null, AddressActionTypes | NavigateActionType>>();
@@ -23,6 +23,7 @@ const List: React.FC = () => {
         dispatch(setDefaultAddress(id));
     }
     const history = useNavigate();
+    const location = useLocation();
 
     if (location.pathname === '/cart/address') {
         if (!cartId) {

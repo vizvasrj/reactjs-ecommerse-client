@@ -16,7 +16,8 @@ import {
     FETCH_PRODUCTS_SELECT,
     SET_PRODUCTS_LOADING,
     SET_ADVANCED_FILTERS,
-    RESET_ADVANCED_FILTERS
+    RESET_ADVANCED_FILTERS,
+    PRODUCT_EDIT
 } from './constants';
 import { Product } from './interface';
 import { ProductActionTypes } from './interface';
@@ -114,12 +115,19 @@ const productReducer = (state = initialState, action: ProductActionTypes) => {
                 ]
             };
         case PRODUCT_CHANGE:
+            console.log("from reducer", action.payload);
+            const { name, value } = action.payload;
             return {
                 ...state,
                 productFormData: {
                     ...state.productFormData,
-                    ...action.payload
+                    [name]: value
                 }
+            };
+        case PRODUCT_EDIT:
+            return {
+                ...state,
+                productFormData: action.payload
             };
         case PRODUCT_EDIT_CHANGE:
             return {

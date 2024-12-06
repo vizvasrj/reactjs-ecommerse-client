@@ -22,14 +22,19 @@ const Edit: React.FC = () => {
     const { id: productId } = useParams<{ id: string }>();
 
     const user = useSelector((state: RootState) => state.account.user);
-    const product = useSelector((state: RootState) => state.product.product);
+    const { productFormData: product } = useSelector((state: RootState) => state.product);
     const formErrors = useSelector((state: RootState) => state.product.editFormErrors);
     const brands = useSelector((state: RootState) => state.brand.brandsSelect);
+    // useEffect(() => {
+    //     if (!productFormData) {
+    //         dispatch()
+    //     }
+    // }, []);
 
     useEffect(() => {
         dispatch(resetProduct());
         if (productId) {
-            dispatch(fetchProduct(productId));
+            dispatch(fetchProduct(productId, true));
         } else {
 
         }
@@ -56,7 +61,8 @@ const Edit: React.FC = () => {
         <SubPage
             title='Edit Product'
             actionTitle='Cancel'
-            handleAction={goBack}
+            handleAction={() => navigate(-1)}
+        // handleAction={() => console.log(productFormData)}
         >
             {product?._id ? (
                 <EditProduct
@@ -65,7 +71,7 @@ const Edit: React.FC = () => {
                     formErrors={formErrors}
                     brands={brands}
                     productChange={handleProductEditChange}
-                    updateProduct={handleUpdateProduct}
+                    updateProduct={updateProduct}
                     deleteProduct={handleDeleteProduct}
                     activateProduct={handleActivateProduct}
 

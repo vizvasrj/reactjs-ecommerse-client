@@ -87,11 +87,11 @@ const Input: React.FC<InputProps> = ({
                     size={30}
                     color1={'#adb5bd'}
                     color2={'#ffb302'}
-                    a11y={true}
-                    isHalf={false}
-                    emptyIcon={<i className='fa fa-star' />}
-                    halfIcon={<i className='fa fa-star-half-alt' />}
-                    filledIcon={<i className='fa fa-star' />}
+                    // a11y={true}
+                    half={false}
+                    // emptyIcon={<i className='fa fa-star' />}
+                    // halfIcon={<i className='fa fa-star-half-alt' />}
+                    // filledIcon={<i className='fa fa-star' />}
                     value={Number(value)}
                     onChange={(value: number) => {
                         onInputChange(name, value);
