@@ -1,7 +1,4 @@
 export const API_URL = process.env.API_URL;
-console.log("API URL from constants", process.env.API_URL);
-console.log("API URL from constants", process.env.SECRET);
-console.log("API URL from constants", process.env.love);
 
 export const SOCKET_URL =
     window.location.host.indexOf('localhost') >= 0
