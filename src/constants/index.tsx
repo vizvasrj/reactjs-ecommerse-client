@@ -1,21 +1,8 @@
-import dotenv from 'dotenv';
-
-// Load environment variables from .env file
-dotenv.config();
-const filteredEnv: { [key: string]: string } = {};
-for (const key in process.env) {
-    if (process.env[key] !== undefined) {
-        filteredEnv[key] = process.env[key] as string;
-    }
-}
-const parsed = { API_URL: 'https://golang-ecommerse-backend-1.onrender.com/api' }
-
-dotenv.populate(filteredEnv, parsed)
 
 
 
-process.env.API_URL = 'https://golang-ecommerse-backend-1.onrender.com/api'
-export const API_URL = process.env.API_URL;
+
+export const API_URL = 'https://golang-ecommerse-backend-1.onrender.com/api';
 export const SOCKET_URL =
     window.location.host.indexOf('localhost') >= 0
         ? 'https://golang-ecommerse-backend-1.onrender.com/api'
