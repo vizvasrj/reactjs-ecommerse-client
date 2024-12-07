@@ -13,6 +13,10 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+ARG API_URL
+ENV API_URL=${API_URL}
+
+
 # Build the application
 RUN npm run dev-build
 
@@ -27,6 +31,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80 to the outside world
 EXPOSE 80
+
+
 
 # Start Nginx when the container starts
 CMD ["nginx", "-g", "daemon off;"]
