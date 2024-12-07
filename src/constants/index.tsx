@@ -1,8 +1,8 @@
+process.env.API_URL = 'https://golang-ecommerse-backend-1.onrender.com/api'
 export const API_URL = process.env.API_URL;
-
 export const SOCKET_URL =
     window.location.host.indexOf('localhost') >= 0
-        ? 'http://127.0.0.1:3000'
+        ? 'https://golang-ecommerse-backend-1.onrender.com/api'
         : window.location.host;
 
 export enum ROLES {
