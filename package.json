@@ -61,6 +61,7 @@
         "start": "react-scripts start",
         "build-real": "react-scripts build",
         "build": "cross-env NODE_ENV=production npx webpack --mode production --config webpack/webpack.prod.js",
+        "dev-build": "npm run clean && cross-env NODE_ENV=development webpack --mode development --config webpack/webpack.dev.js",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "clean": "rimraf dist"

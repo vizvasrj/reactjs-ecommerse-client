@@ -23,7 +23,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'public', to: 'dest' },
+                { from: 'public', to: 'dist' },
                 // other patterns
             ],
             options: {
