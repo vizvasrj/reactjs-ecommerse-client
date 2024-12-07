@@ -2,10 +2,10 @@
 
 
 
-export const API_URL = 'https://golang-ecommerse-backend-1.onrender.com/api';
+export const API_URL = 'https://backend.aapan.shop/api';
 export const SOCKET_URL =
     window.location.host.indexOf('localhost') >= 0
-        ? 'https://golang-ecommerse-backend-1.onrender.com/api'
+        ? 'https://backend.aapan.shop/api'
         : window.location.host;
 
 export enum ROLES {
