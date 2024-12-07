@@ -75,7 +75,7 @@ const config = {
             template: path.join(CURRENT_WORKING_DIR, 'public/index.html'),
             inject: true,
             minify: {
-                removeComments: true,
+                // removeComments: true,
                 collapseWhitespace: true,
                 removeRedundantAttributes: true,
                 useShortDoctype: true,
