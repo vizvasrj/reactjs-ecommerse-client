@@ -47,6 +47,9 @@ const Application: React.FC = () => {
             dispatch(handleCart());
         }
     }, [handleCart]);
+    useEffect(() => {
+        console.log("api url", process.env.API_URL);
+    }, []);
 
     const handleTabbing = useCallback((e: KeyboardEvent) => {
         if (e.key === "Tab") {
