@@ -18,7 +18,7 @@ ENV API_URL=${API_URL}
 
 
 # Build the application
-RUN npm run build
+RUN npm run dev-build
 
 # Second stage: Serve the built files with Nginx
 FROM nginx:alpine
