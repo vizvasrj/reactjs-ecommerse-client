@@ -26,7 +26,7 @@ type IFormInput = {
 };
 
 const Login: React.FC = () => {
-    const google_client_id = process.env.GOOGLE_CLIENT_ID;
+    const google_client_id = "585417215790-r22jdle26hpefs77237v82ui0acbm7v9.apps.googleusercontent.com";
     // const navigate = useNavigate();
     // const { login, authentication } = useSelector((state: RootState) => ({
     //     login: state.login,
