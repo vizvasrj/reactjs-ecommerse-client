@@ -17,6 +17,7 @@ import { SetAuthAction, ClearAuthAction } from "../Authentication/action";
 import { CLEAR_AUTH, SET_AUTH } from "../Authentication/constants";
 import { toast } from "react-toastify";
 import toastConfig from "../../utils/toastConfig";
+import { navigate, NavigateActionType } from "../Navigate";
 // import { redirect } from "react-router";
 // import { navigate, NavigateActionType } from "../Navigate";
 interface FormData {
@@ -143,3 +144,23 @@ export const signOut = () => {
     };
 };
 
+export const sendCodeGoogle = (code: string) => {
+    return async (dispatch: ThunkDispatch<RootState, null, LoginActionTypes | NavigateActionType>) => {
+        try {
+            console.log("code", code);
+            const response = await axios.post(`${API_URL}/auth/google`, { code });
+            console.log("response", response.data);
+            const { token, redirect } = response.data;
+            localStorage.setItem('token', token);
+            setToken(token);
+
+            dispatch({ type: SET_AUTH });
+
+
+            dispatch({ type: LOGIN_RESET });
+            dispatch(navigate(redirect))
+        } catch (error) {
+            handleError(error, dispatch);
+        }
+    }
+}

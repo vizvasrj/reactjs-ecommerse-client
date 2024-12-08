@@ -10,7 +10,7 @@ import Input from "../../components/Common/NewInput";
 import Button from "../../components/Common/Button";
 import LoadingIndicator from "../../components/Common/LoadingIndicator";
 import SignupProvider from "../../components/Common/SignupProvider";
-import { login, loginChange } from "./actions";
+import { login, loginChange, sendCodeGoogle } from "./actions";
 import { useForm } from "react-hook-form";
 import { LoginActionTypes } from "./actions";
 import { selectSignupAndAuthentication } from "../../selectors/authselector";
@@ -31,32 +31,6 @@ const Login: React.FC = () => {
 
     const google_client_id = "1087793298630-r5jpl3gu8d2h9vg01014ju2491ihpjvn.apps.googleusercontent.com";
 
-    const handleSuccess = (credentialResponse: any) => {
-        // If you are using the authorization code flow, you will receive a code to be exchanged for an access token
-        const authorizationCode = credentialResponse.code;
-
-        // Send the authorization code to your backend server
-        fetch('/api/auth/google', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ code: authorizationCode }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response from your backend server
-                console.log('Login successful, backend response:', data);
-            })
-            .catch(error => {
-                // Handle errors in communicating with your backend server
-                console.error('Error exchanging authorization code:', error);
-            });
-    };
-
-    const handleError = (errorResponse: any) => {
-        console.error('Google login failed', errorResponse);
-    };
 
     // const navigate = useNavigate();
     // const { login, authentication } = useSelector((state: RootState) => ({
@@ -86,6 +60,20 @@ const Login: React.FC = () => {
     const handleSubmitFn = (data: IFormInput) => {
         // e.preventDefault();
         dispatch(login());
+    };
+
+
+    const handleSuccess = (credentialResponse: any) => {
+        // If you are using the authorization code flow, you will receive a code to be exchanged for an access token
+        const authorizationCode = credentialResponse.code;
+        console.log("response", credentialResponse);
+
+        // Send the authorization code to your backend server
+        dispatch(sendCodeGoogle(credentialResponse.credential));
+    };
+
+    const handleError = (errorResponse: any) => {
+        console.error('Google login failed', errorResponse);
     };
 
     const { register, handleSubmit, formState: { errors }, trigger } = useForm<IFormInput>();
