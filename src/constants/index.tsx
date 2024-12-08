@@ -1,11 +1,10 @@
 
 
+export const API_URL = process.env.API_URL || 'https://backend.aapan.shop/api';
 
-
-export const API_URL = 'https://backend.aapan.shop/api';
 export const SOCKET_URL =
     window.location.host.indexOf('localhost') >= 0
-        ? 'https://backend.aapan.shop/api'
+        ? API_URL
         : window.location.host;
 
 export enum ROLES {

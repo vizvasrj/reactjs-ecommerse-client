@@ -25,8 +25,39 @@ type IFormInput = {
     password: string;
 };
 
+// This function will be called upon a successful login
+
 const Login: React.FC = () => {
-    const google_client_id = "585417215790-r22jdle26hpefs77237v82ui0acbm7v9.apps.googleusercontent.com";
+
+    const google_client_id = "1087793298630-r5jpl3gu8d2h9vg01014ju2491ihpjvn.apps.googleusercontent.com";
+
+    const handleSuccess = (credentialResponse: any) => {
+        // If you are using the authorization code flow, you will receive a code to be exchanged for an access token
+        const authorizationCode = credentialResponse.code;
+
+        // Send the authorization code to your backend server
+        fetch('/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code: authorizationCode }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from your backend server
+                console.log('Login successful, backend response:', data);
+            })
+            .catch(error => {
+                // Handle errors in communicating with your backend server
+                console.error('Error exchanging authorization code:', error);
+            });
+    };
+
+    const handleError = (errorResponse: any) => {
+        console.error('Google login failed', errorResponse);
+    };
+
     // const navigate = useNavigate();
     // const { login, authentication } = useSelector((state: RootState) => ({
     //     login: state.login,
@@ -136,13 +167,11 @@ const Login: React.FC = () => {
                     </Link>
                     <GoogleOAuthProvider clientId={google_client_id || ""}>
                         <GoogleLogin
-                            onSuccess={credentialResponse => {
-                                console.log(credentialResponse);
-                            }}
-                            onError={() => {
-                                console.log('Login Failed');
-                            }}
-                        />;
+                            onSuccess={handleSuccess}
+                            onError={handleError}
+                            useOneTap
+                            flow="auth-code"
+                        />
 
                     </GoogleOAuthProvider>;
 
