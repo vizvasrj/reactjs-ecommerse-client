@@ -15,12 +15,18 @@ import { useForm } from "react-hook-form";
 import { LoginActionTypes } from "./actions";
 import { selectSignupAndAuthentication } from "../../selectors/authselector";
 import { navigate, NavigateActionType } from "../Navigate";
+
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+
+
 type IFormInput = {
     email: string;
     password: string;
 };
 
 const Login: React.FC = () => {
+    const google_client_id = process.env.GOOGLE_CLIENT_ID;
     // const navigate = useNavigate();
     // const { login, authentication } = useSelector((state: RootState) => ({
     //     login: state.login,
@@ -128,6 +134,18 @@ const Login: React.FC = () => {
                     >
                         Forgot Password?
                     </Link>
+                    <GoogleOAuthProvider clientId={google_client_id || ""}>
+                        <GoogleLogin
+                            onSuccess={credentialResponse => {
+                                console.log(credentialResponse);
+                            }}
+                            onError={() => {
+                                console.log('Login Failed');
+                            }}
+                        />;
+
+                    </GoogleOAuthProvider>;
+
                 </div>
             </form>
         </div>
