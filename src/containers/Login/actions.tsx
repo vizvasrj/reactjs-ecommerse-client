@@ -149,7 +149,7 @@ export const sendCodeGoogle = (code: string) => {
         try {
             console.log("code", code);
             const response = await axios.post(`${API_URL}/auth/google`, { code });
-            console.log("response", response.data);
+            console.log("response from setCodeGoogle", response.data);
             const { token, redirect } = response.data;
             localStorage.setItem('token', token);
             setToken(token);

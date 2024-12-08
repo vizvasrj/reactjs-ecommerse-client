@@ -16,7 +16,7 @@ import { LoginActionTypes } from "./actions";
 import { selectSignupAndAuthentication } from "../../selectors/authselector";
 import { navigate, NavigateActionType } from "../Navigate";
 
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 
 
@@ -63,6 +63,11 @@ const Login: React.FC = () => {
     };
 
 
+
+    // * Google Login Start
+    const [user, setUser] = React.useState<any>(null);
+    const [profile, setProfile] = React.useState<any>(null);
+
     const handleSuccess = (credentialResponse: any) => {
         // If you are using the authorization code flow, you will receive a code to be exchanged for an access token
         const authorizationCode = credentialResponse.code;
@@ -76,6 +81,20 @@ const Login: React.FC = () => {
         console.error('Google login failed', errorResponse);
     };
 
+
+    const googleLogin = useGoogleLogin({
+        flow: "auth-code",
+        onSuccess: async codeResponse => {
+            console.log('codeResponse', codeResponse);
+            // Send the authorization code to your backend server
+            dispatch(sendCodeGoogle(codeResponse.code));
+        },
+        onError: errorResponse => {
+            console.error('Google login failed', errorResponse);
+        }
+    });
+
+    // * Google Login End
     const { register, handleSubmit, formState: { errors }, trigger } = useForm<IFormInput>();
     return (
         <div className='login-form'>
@@ -153,15 +172,7 @@ const Login: React.FC = () => {
                     >
                         Forgot Password?
                     </Link>
-                    <GoogleOAuthProvider clientId={google_client_id || ""}>
-                        <GoogleLogin
-                            onSuccess={handleSuccess}
-                            onError={handleError}
-                            useOneTap
-                            flow="auth-code"
-                        />
-
-                    </GoogleOAuthProvider>;
+                    <Button text="Google Login" onClick={googleLogin} />
 
                 </div>
             </form>

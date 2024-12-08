@@ -11,9 +11,16 @@ import ReactStars from "./components/Package/react-stars";
 // import RangeSlider from "./components/Common/RangeSlider";
 // import ResetPasswordForm from "./components/Common/ResetPasswordForm";
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+const google_client_id = process.env.GOOGLE_CLIENT_ID;
+
+import { GoogleOAuthProvider } from '@react-oauth/google';
 root.render(
+
     // <React.StrictMode>
-    <RootApp />
+    <GoogleOAuthProvider clientId="1087793298630-r5jpl3gu8d2h9vg01014ju2491ihpjvn.apps.googleusercontent.com">
+        <RootApp />
+    </GoogleOAuthProvider>
     // </React.StrictMode>
 
 );
